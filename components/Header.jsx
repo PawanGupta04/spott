@@ -31,7 +31,6 @@ export default function Header() {
     <>
       <nav className="fixed top-0 left-0 right-0 bg-background/80 backdrop-blur-xl z-20 border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
-          
           {/* Left: Logo & Badge */}
           <Link href="/" className="flex items-center gap-2 shrink-0">
             <Image
@@ -43,7 +42,7 @@ export default function Header() {
               priority
             />
             {hasPro && (
-              <Badge className="bg-gradient-to-r from-pink-500 to-orange-500 gap-1 text-white text-xs px-2 py-0.5 font-medium">
+              <Badge className="bg-linear-to-r from-pink-500 to-orange-500 gap-1 text-white text-xs px-2 py-0.5 font-medium">
                 <Crown className="w-3 h-3" />
                 Pro
               </Badge>
@@ -72,7 +71,7 @@ export default function Header() {
               href="/explore"
               className={cn(
                 buttonVariants({ variant: "ghost", size: "sm" }),
-                "text-muted-foreground hover:text-foreground"
+                "text-muted-foreground hover:text-foreground",
               )}
             >
               Explore
@@ -84,7 +83,7 @@ export default function Header() {
                 href="/create-event"
                 className={cn(
                   buttonVariants({ size: "sm" }),
-                  "gap-1.5 px-3 font-medium bg-purple-600 hover:bg-purple-700 text-white transition-colors"
+                  "gap-1.5 px-3 font-medium bg-purple-600 hover:bg-purple-700 text-white transition-colors",
                 )}
               >
                 <Plus className="w-4 h-4" />
@@ -97,7 +96,8 @@ export default function Header() {
                   afterSignOutUrl="/"
                   appearance={{
                     elements: {
-                      avatarBox: "w-8 h-8 rounded-full ring-1 ring-border hover:ring-purple-500 transition-all",
+                      avatarBox:
+                        "w-8 h-8 rounded-full ring-1 ring-border hover:ring-purple-500 transition-all",
                     },
                   }}
                 >
@@ -120,7 +120,10 @@ export default function Header() {
 
             <Unauthenticated>
               <SignInButton mode="modal">
-                <Button size="sm" className="bg-purple-600 hover:bg-purple-700 text-white font-medium">
+                <Button
+                  size="sm"
+                  className="bg-purple-600 hover:bg-purple-700 text-white font-medium"
+                >
                   Sign In
                 </Button>
               </SignInButton>

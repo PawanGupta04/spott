@@ -5,7 +5,7 @@ import { ConvexClientProvider } from "./ConvexClientProvider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark ,neobrutalism } from "@clerk/ui/themes";
 export const metadata = {
-  title: "spot",
+  title: "spott",
   description: "Discover and create amazing events",
 };
 

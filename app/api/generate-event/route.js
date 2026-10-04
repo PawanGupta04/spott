@@ -3,6 +3,23 @@ import { NextResponse } from "next/server";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
+async function generateWithRetry(model, prompt, retries = 2) {
+  try {
+    return await model.generateContent(prompt);
+  } catch (error) {
+    const isOverloaded =
+      error.message?.includes("503") ||
+      error.message?.includes("overloaded") ||
+      error.message?.includes("high demand");
+
+    if (retries > 0 && isOverloaded) {
+      await new Promise((r) => setTimeout(r, 1500));
+      return generateWithRetry(model, prompt, retries - 1);
+    }
+    throw error;
+  }
+}
+
 export async function POST(req) {
   try {
     const { prompt } = await req.json();
@@ -40,7 +57,7 @@ Rules:
 - suggestedTicketType should be either "free" or "paid"
 `;
 
-    const result = await model.generateContent(systemPrompt);
+    const result = await generateWithRetry(model, systemPrompt);
 
     const response = await result.response;
     const text = response.text();
@@ -62,9 +79,19 @@ Rules:
     return NextResponse.json(eventData);
   } catch (error) {
     console.error("Error generating event:", error);
+
+    const isOverloaded =
+      error.message?.includes("503") ||
+      error.message?.includes("overloaded") ||
+      error.message?.includes("high demand");
+
     return NextResponse.json(
-      { error: "Failed to generate event" + error.message },
-      { status: 500 }
+      {
+        error: isOverloaded
+          ? "The AI model is currently busy. Please try again in a moment."
+          : "Failed to generate event: " + error.message,
+      },
+      { status: isOverloaded ? 503 : 500 }
     );
   }
 }

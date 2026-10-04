@@ -108,8 +108,7 @@ export default function SearchLocationBar() {
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
-    return () =>
-      document.removeEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
@@ -130,7 +129,7 @@ export default function SearchLocationBar() {
 
         {/* Search Results */}
         {showSearchResults && (
-          <div className="absolute top-full mt-2 w-96 bg-background border rounded-lg shadow-lg z-50 max-h-100 overflow-y-auto">
+          <div className="absolute top-full mt-2 w-96 bg-background border rounded-lg shadow-lg z-50 max-h-[400px] overflow-y-auto">
             {searchLoading ? (
               <div className="p-4 flex items-center justify-center">
                 <Loader2 className="w-5 h-5 animate-spin text-purple-500" />
@@ -191,6 +190,7 @@ export default function SearchLocationBar() {
           <SelectValue placeholder="State" />
         </SelectTrigger>
         <SelectContent>
+          {/* <SelectItem value="">State</SelectItem> */}
           {indianStates.map((state) => (
             <SelectItem key={state.isoCode} value={state.name}>
               {state.name}
@@ -210,10 +210,11 @@ export default function SearchLocationBar() {
         }}
         disabled={!selectedState}
       >
-        <SelectTrigger className="w-32 h-9 rounded-none rounded-r-md">
+        <SelectTrigger className="w-32 h-9 rounded-none rounded-r-md ">
           <SelectValue placeholder="City" />
         </SelectTrigger>
         <SelectContent>
+          {/* <SelectItem value="">City</SelectItem> */}
           {cities.map((city) => (
             <SelectItem key={city.name} value={city.name}>
               {city.name}
